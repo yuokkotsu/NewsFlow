@@ -22,8 +22,10 @@ NEWS_API_KEY=твой_ключ_с_newsapi.org npm run dev
 3. Создай в корне проекта файл `.env`
 4. Вставь туда:
 
+```bash
 NEWS_API_KEY=твой_скопированный_ключ
 PORT=3000
+```
 
 ![да](images/....jpg)
 
