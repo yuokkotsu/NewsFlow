@@ -6,6 +6,7 @@
 
 ## Запуск
 
+```bash
 git clone https://github.com/yuokkotsu/NewsFlow.git
 cd NewsFlow
 npm install
