@@ -32,7 +32,7 @@ PORT=3000
 
 ```bash
 npm run dev 
-http://localhost:3000
 ```
+http://localhost:3000
 
 ![владоса добавить захотелось](images/vlad.jpg)
