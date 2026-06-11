@@ -6,7 +6,6 @@ const savedContainer = document.getElementById('savedContainer');
 
 // Функция показа уведомления
 function showNotification(message, isError = false) {
-    // Создаём элемент уведомления
     const notification = document.createElement('div');
     notification.textContent = message;
     notification.style.cssText = `
@@ -26,7 +25,6 @@ function showNotification(message, isError = false) {
     
     document.body.appendChild(notification);
     
-    // Через 2 секунды удаляем
     setTimeout(() => {
         notification.style.animation = 'slideOut 0.3s ease';
         setTimeout(() => notification.remove(), 300);
@@ -50,7 +48,6 @@ function addToFavorites(article) {
         showNotification('✅ Новость сохранена в избранное!');
         renderFavorites();
         
-        // Подсветка новой новости в избранном
         setTimeout(() => {
             const firstArticle = savedContainer?.firstElementChild;
             if (firstArticle) {
@@ -123,7 +120,8 @@ searchBtn.addEventListener('click', async () => {
         const response = await fetch(`/api/news?q=${encodeURIComponent(query)}`);
         
         if (!response.ok) {
-            throw new Error('Ошибка сервера');
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Ошибка сервера');
         }
         
         const articles = await response.json();
@@ -148,7 +146,7 @@ searchBtn.addEventListener('click', async () => {
     }
 });
 
-// Делаем функции глобальными для вызова из HTML
+// Делаем функции глобальными
 window.addToFavorites = addToFavorites;
 window.removeFromFavorites = removeFromFavorites;
 
