@@ -30,6 +30,9 @@ PORT=3000
 
 ## Открыть сайт
 
+```bash
+npm run dev 
 http://localhost:3000
+```
 
 ![владоса добавить захотелось](images/vlad.jpg)
