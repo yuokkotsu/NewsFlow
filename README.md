@@ -10,7 +10,6 @@
 git clone https://github.com/yuokkotsu/NewsFlow.git
 cd NewsFlow
 npm install
-NEWS_API_KEY=твой_ключ_с_newsapi.org npm run dev
 ```
 
 ![без вопросов.](images/bratroberta.jpg)
