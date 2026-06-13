@@ -35,4 +35,14 @@ npm run dev
 ```
 http://localhost:3000
 
+Ну или по ссылке:https://newsflow-9p9o.onrender.com
+
 ![владоса добавить захотелось](images/vlad.jpg)
+
+## Структура сайта
+
+- `src/services/`    - запросы к NewsAPI
+- `src/controllers/` - обработка запросов
+- `src/routes/`      - маршруты
+- `public/`          - HTML, CSS, JS
+- `.env.example`     - пример переменных окружения
