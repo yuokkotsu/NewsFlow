@@ -41,8 +41,10 @@ http://localhost:3000
 
 ## Структура сайта
 
+```bash
 - `src/services/`    - запросы к NewsAPI
 - `src/controllers/` - обработка запросов
 - `src/routes/`      - маршруты
 - `public/`          - HTML, CSS, JS
 - `.env.example`     - пример переменных окружения
+```
