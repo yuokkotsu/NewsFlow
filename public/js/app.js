@@ -1,10 +1,8 @@
-// DOM элементы
 const searchBtn = document.getElementById('searchBtn');
 const searchInput = document.getElementById('searchInput');
 const newsContainer = document.getElementById('newsContainer');
 const savedContainer = document.getElementById('savedContainer');
 
-// Функция показа уведомления
 function showNotification(message, isError = false) {
     const notification = document.createElement('div');
     notification.textContent = message;
@@ -31,13 +29,11 @@ function showNotification(message, isError = false) {
     }, 2000);
 }
 
-// Получить избранное из localStorage
 function getFavorites() {
     const saved = localStorage.getItem('favoriteNews');
     return saved ? JSON.parse(saved) : [];
 }
 
-// Сохранить в избранное
 function addToFavorites(article) {
     const favorites = getFavorites();
     const exists = favorites.some(fav => fav.url === article.url);
@@ -45,7 +41,7 @@ function addToFavorites(article) {
     if (!exists) {
         favorites.push(article);
         localStorage.setItem('favoriteNews', JSON.stringify(favorites));
-        showNotification('✅ Новость сохранена в избранное!');
+        showNotification('Новость сохранена в избранное!');
         renderFavorites();
         
         setTimeout(() => {
@@ -59,11 +55,10 @@ function addToFavorites(article) {
             }
         }, 100);
     } else {
-        showNotification('⚠️ Эта новость уже в избранном', true);
+        showNotification('Эта новость уже в избранном', true);
     }
 }
 
-// Удалить из избранного
 function removeFromFavorites(articleUrl) {
     let favorites = getFavorites();
     const wasRemoved = favorites.some(fav => fav.url === articleUrl);
@@ -78,12 +73,11 @@ function removeFromFavorites(articleUrl) {
     renderFavorites();
 }
 
-// Отобразить избранное
 function renderFavorites() {
     const favorites = getFavorites();
     
     if (favorites.length === 0) {
-        savedContainer.innerHTML = '<div class="empty-message">⭐ Нет сохранённых новостей</div>';
+        savedContainer.innerHTML = '<div class="empty-message">Нет сохранённых новостей</div>';
         return;
     }
     
@@ -97,7 +91,6 @@ function renderFavorites() {
     `).join('');
 }
 
-// Вспомогательная функция для защиты от XSS
 function escapeHtml(text) {
     if (!text) return text;
     const div = document.createElement('div');
@@ -105,7 +98,6 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// Поиск новостей
 searchBtn.addEventListener('click', async () => {
     const query = searchInput.value.trim();
     
@@ -114,7 +106,7 @@ searchBtn.addEventListener('click', async () => {
         return;
     }
     
-    newsContainer.innerHTML = '<div class="empty-message">⏳ Загрузка...</div>';
+    newsContainer.innerHTML = '<div class="empty-message">Загрузка...</div>';
     
     try {
         const response = await fetch(`/api/news?q=${encodeURIComponent(query)}`);
@@ -127,7 +119,7 @@ searchBtn.addEventListener('click', async () => {
         const articles = await response.json();
         
         if (articles.length === 0) {
-            newsContainer.innerHTML = '<div class="empty-message">😕 Ничего не найдено</div>';
+            newsContainer.innerHTML = '<div class="empty-message">Ничего не найдено</div>';
             return;
         }
         
@@ -136,19 +128,17 @@ searchBtn.addEventListener('click', async () => {
                 <h3>${escapeHtml(article.title) || 'Без заголовка'}</h3>
                 <p>${escapeHtml(article.description) || 'Описание отсутствует'}</p>
                 ${article.url ? `<a href="${article.url}" target="_blank">Читать →</a>` : ''}
-                <button onclick='window.addToFavorites(${JSON.stringify(article).replace(/'/g, "&#39;")})'>⭐ Сохранить</button>
+                <button onclick='window.addToFavorites(${JSON.stringify(article).replace(/'/g, "&#39;")})'>Сохранить</button>
             </div>
         `).join('');
         
     } catch (error) {
         console.error('Ошибка:', error);
-        newsContainer.innerHTML = '<div class="empty-message">❌ Ошибка загрузки. Проверьте интернет и ключ API</div>';
+        newsContainer.innerHTML = '<div class="empty-message">Ошибка загрузки. Проверьте интернет и ключ API</div>';
     }
 });
 
-// Делаем функции глобальными
 window.addToFavorites = addToFavorites;
 window.removeFromFavorites = removeFromFavorites;
 
-// Загружаем избранное при старте
 renderFavorites();
